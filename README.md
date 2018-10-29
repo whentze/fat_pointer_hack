@@ -1,5 +1,3 @@
-# fat_pointer_hack
-
 ## The Fat Pointer Hack
 
 This crate showcases a silly hack to make user-defined fat pointers
