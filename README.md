@@ -8,7 +8,7 @@ In the simplest case, you can use this to tag arbitrary references with a `usize
 ```rust
 use fat_pointer_hack::{RefExt, FatRefExt};
 
-let mut x = 5;
+let x = 5;
 
 // Create a tagged reference to it.
 // Note the type annotation: it really is just a reference.
