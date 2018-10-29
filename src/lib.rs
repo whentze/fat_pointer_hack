@@ -13,6 +13,12 @@
 //! // Create a tagged reference to it.
 //! // Note the type annotation: it really is just a reference.
 //! let mut fat_ref : &_ = (&x).tag(9001);
+//! 
+//! // However, it is now two pointers wide
+//! assert_eq!(std::mem::size_of_val(&fat_ref), 2 * std::mem::size_of::<usize>());
+//! 
+//! // To actually use the reference, you need to .as_ref() it:
+//! assert_eq!(fat_ref.as_ref(), &5);
 //!
 //! // You can access the tag
 //! assert_eq!(fat_ref.tag(), 9001);
@@ -31,11 +37,23 @@
 //! # use fat_pointer_hack::{RefExt, FatRefExt};
 //! let mut x = "Rust";
 //!
-//! let mut heart_ref = (&x).tag('♥');
-//! let mut float_ref = (&x).tag(0.9);
+//! let heart_ref = (&x).tag('♥');
+//! let float_ref = (&x).tag(0.9);
 //!
 //! assert_eq!(heart_ref.tag(), '♥');
 //! assert_eq!(float_ref.tag(), 0.9);
+//! ```
+//! 
+//! Finally, you can tag mutable references as well:
+//! ```
+//! # use fat_pointer_hack::{RefExt, FatRefExt};
+//! let mut x = 3;
+//! {
+//!     let fat_mut_ref = (&mut x).tag('?');
+//!     *fat_mut_ref.as_mut() = 7;
+//! }
+//!
+//! assert_eq!(x, 7);
 //! ```
 //! 
 //! Note that these obey the regular borrowing rules:
