@@ -8,7 +8,7 @@
 //! ```
 //! use fat_pointer_hack::{RefExt, FatRefExt};
 //! // Create a string
-//! let mut x = "Reference me!";
+//! let mut x = 5;
 //!
 //! // Create a tagged reference to it.
 //! // Note the type annotation: it really is just a reference.
@@ -22,8 +22,8 @@
 //! assert_eq!(fat_ref.tag(), 1337);
 //!
 //! // Or turn it back into an ordinary ref
-//! let regular_ref : &str = fat_ref.to_plain();
-//! assert_eq!(regular_ref, "Reference me!");
+//! let regular_ref : &u32 = fat_ref.to_plain();
+//! assert_eq!(*regular_ref, 5);
 //! ```
 //! 
 //! You can also tag with other types such as floats or chars:
