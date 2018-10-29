@@ -21,11 +21,11 @@
 //! assert_eq!(fat_ref.as_ref(), &5);
 //!
 //! // You can access the tag
-//! assert_eq!(fat_ref.tag(), 9001);
+//! assert_eq!(fat_ref.get_tag(), 9001);
 //!
 //! // And change it too
 //! fat_ref.set_tag(1337);
-//! assert_eq!(fat_ref.tag(), 1337);
+//! assert_eq!(fat_ref.get_tag(), 1337);
 //!
 //! // Or turn it back into an ordinary ref
 //! let regular_ref : &u32 = fat_ref.to_plain();
@@ -40,8 +40,8 @@
 //! let heart_ref = (&x).tag('♥');
 //! let float_ref = (&x).tag(0.9);
 //!
-//! assert_eq!(heart_ref.tag(), '♥');
-//! assert_eq!(float_ref.tag(), 0.9);
+//! assert_eq!(heart_ref.get_tag(), '♥');
+//! assert_eq!(float_ref.get_tag(), 0.9);
 //! ```
 //! 
 //! Finally, you can tag mutable references as well:
@@ -203,7 +203,7 @@ pub trait FatRefExt<'a> {
     type Meta: Metadata;
     fn from_ref(thin_ref: &Self::Target, metadata: Self::Meta) -> Self;
     fn to_plain(self) -> &'a Self::Target;
-    fn tag(self) -> Self::Meta;
+    fn get_tag(self) -> Self::Meta;
     fn set_tag(&mut self, tag: Self::Meta);
 }
 
@@ -224,7 +224,7 @@ impl<'a, P, M: 'a + Metadata> FatRefExt<'a> for FatRef<'a, P, M> {
     }
 
     /// Returns the tag of this FatRef
-    fn tag(self) -> M {
+    fn get_tag(self) -> M {
         M::unpack(Tag(self.unsize.len()))
     }
 
@@ -282,7 +282,7 @@ impl<P: Debug, M: Debug + Metadata> Debug for FatPointee<P, M> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.debug_struct("FatRef")
             .field("pointee", &self.pointee)
-            .field("tag", &self.tag())
+            .field("tag", &self.get_tag())
             .finish()
     }
 }

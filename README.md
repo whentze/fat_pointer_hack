@@ -21,11 +21,11 @@ assert_eq!(std::mem::size_of_val(&fat_ref), 2 * std::mem::size_of::<usize>());
 assert_eq!(fat_ref.as_ref(), &5);
 
 // You can access the tag
-assert_eq!(fat_ref.tag(), 9001);
+assert_eq!(fat_ref.get_tag(), 9001);
 
 // And change it too
 fat_ref.set_tag(1337);
-assert_eq!(fat_ref.tag(), 1337);
+assert_eq!(fat_ref.get_tag(), 1337);
 
 // Or turn it back into an ordinary ref
 let regular_ref : &u32 = fat_ref.to_plain();
@@ -39,8 +39,8 @@ let mut x = "Rust";
 let heart_ref = (&x).tag('♥');
 let float_ref = (&x).tag(0.9);
 
-assert_eq!(heart_ref.tag(), '♥');
-assert_eq!(float_ref.tag(), 0.9);
+assert_eq!(heart_ref.get_tag(), '♥');
+assert_eq!(float_ref.get_tag(), 0.9);
 ```
 
 Finally, you can tag mutable references as well:
