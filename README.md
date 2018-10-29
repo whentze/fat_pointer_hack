@@ -7,7 +7,7 @@ This crate showcases a silly hack to make user-defined fat pointers
 In the simplest case, you can use this to tag arbitrary references with a `usize`:
 ```rust
 use fat_pointer_hack::{RefExt, FatRefExt};
-// Create a string
+
 let mut x = 5;
 
 // Create a tagged reference to it.
