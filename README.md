@@ -26,6 +26,26 @@ let regular_ref : &str = fat_ref.to_plain();
 assert_eq!(regular_ref, "Reference me!");
 ```
 
+You can also tag with other types such as floats or chars:
+```rust
+let mut x = "Rust";
+
+let mut heart_ref = (&x).tag('♥');
+let mut float_ref = (&x).tag(0.9);
+
+assert_eq!(heart_ref.tag(), '♥');
+assert_eq!(float_ref.tag(), 0.9);
+```
+
+Note that these obey the regular borrowing rules:
+```compile_fail
+# use fat_pointer_hack::{RefExt, FatRefExt};
+let mut x = vec![1,2,3];
+
+let shared_fat_ref = (&x).tag(0);
+
+x.push(4); // Doesn't compile - x is borrowed!
+```
 
 ### Why?
 
