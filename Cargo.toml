@@ -1,0 +1,6 @@
+[package]
+name = "fat_pointer_hack"
+version = "0.1.0"
+authors = ["whentze <muvlon@hentzes.de>"]
+
+[dependencies]
